@@ -5,8 +5,6 @@
 
 [![Latest Travis CI build status](https://travis-ci.org/dhaitz/mplcyberpunk.png)](https://travis-ci.org/dhaitz/mplcyberpunk)
 
-[![Documentation Status](https://readthedocs.org/projects/mplcyberpunk/badge/?version=stable)](http://mplcyberpunk.pypa.io/en/stable/?badge=stable)
-
 A Python package on top of `matplotlib` to create a 'cyberpunk' style
 
 ![](img/demo.png)
