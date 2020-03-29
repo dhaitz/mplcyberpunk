@@ -8,7 +8,7 @@ __all__ = []
 import matplotlib as mpl
 import pkg_resources
 
-from .core import make_lines_glow, add_underglow
+from .core import add_glow_effects, make_lines_glow, add_underglow
 
 # register the included stylesheet in the mpl style library
 data_path = pkg_resources.resource_filename('mplcyberpunk', 'data/')

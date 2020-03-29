@@ -3,7 +3,13 @@
 import matplotlib.pyplot as plt
 
 
-def make_lines_glow(ax=None, n_glow_lines=10, diff_linewidth=1.05, alpha_base_value=0.3):
+def add_glow_effects(ax=None):
+    """Add a glow effect to the lines in an axis object and an 'underglow' effect below the line."""
+    make_lines_glow(ax=ax)
+    add_underglow(ax=ax)
+
+
+def make_lines_glow(ax=None, n_glow_lines=10, diff_linewidth=1.05, alpha_line=0.3):
     """Add a glow effect to the lines in an axis object.
 
     Each existing line is redrawn several times with increasing width and low alpha to create the glow effect.
@@ -14,7 +20,7 @@ def make_lines_glow(ax=None, n_glow_lines=10, diff_linewidth=1.05, alpha_base_va
 
     lines = ax.get_lines()
 
-    alpha_value = alpha_base_value / n_glow_lines
+    alpha_value = alpha_line / n_glow_lines
 
     for line in lines:
 
@@ -30,7 +36,7 @@ def make_lines_glow(ax=None, n_glow_lines=10, diff_linewidth=1.05, alpha_base_va
             line_copy.glow_line = True  # mark the glow lines, to disregard them in the underglow function.
 
 
-def add_underglow(ax=None, alpha=0.1):
+def add_underglow(ax=None, alpha_underglow=0.1):
     """Add an 'underglow' effect, i.e. faintly color the area below the line.
 
     The line properties are copied as seen in this solution: https://stackoverflow.com/a/54688412/3240855
@@ -52,4 +58,4 @@ def add_underglow(ax=None, alpha=0.1):
                         y1=y,
                         y2=[0] * len(y),
                         color=color,
-                        alpha=alpha)
+                        alpha=alpha_underglow)
