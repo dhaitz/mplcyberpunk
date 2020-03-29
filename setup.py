@@ -14,7 +14,7 @@ setup(
     author="Dominik Haitz",
     author_email="dominik.haitz@gmx.de",
 
-    description="Add-on for Matplotlib",
+    description="Add-on for Matplotlib to produce 'Cyberpunk' style plots",
 
     long_description=Path('README.md').open().read(),
 
