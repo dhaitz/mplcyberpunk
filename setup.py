@@ -29,7 +29,7 @@ setup(
         "version_format": "{tag}.dev{sha}",
         "starting_version": "0.0.1"
     },
-    setup_requires=Path('requirements.txt').open().read(),
+    setup_requires=['matplotlib'],
 
     classifiers=[
         'License :: OSI Approved :: MIT License',
