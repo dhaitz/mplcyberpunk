@@ -6,7 +6,7 @@ from setuptools import setup
 
 setup(
     name="mplcyberpunk",
-    version="0.1.2",
+    version="0.1.3",
     url="https://github.com/dhaitz/mplcyberpunk",
     license='MIT',
 
