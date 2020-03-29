@@ -16,7 +16,7 @@ setup(
 
     description="Add-on for Matplotlib to produce 'Cyberpunk' style plots",
 
-    long_description=Path('README.md').open().read(),
+    long_description="Add-on for Matplotlib to produce 'Cyberpunk' style plots. See https://github.com/dhaitz/mplcyberpunk",
 
 
     packages=["mplcyberpunk"],
