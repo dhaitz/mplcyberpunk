@@ -17,7 +17,6 @@ setup(
 
     long_description="Add-on for Matplotlib to produce 'Cyberpunk' style plots. See https://github.com/dhaitz/mplcyberpunk",
 
-
     packages=["mplcyberpunk"],
     package_data={
       'mplcyberpunk': ['data/*.mplstyle'],
