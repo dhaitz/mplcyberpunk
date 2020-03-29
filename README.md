@@ -1,11 +1,9 @@
 # mplcyberpunk
 
 
-[![Latest PyPI version](https://img.shields.io/pypi/v/mplcyberpunk.svg)](https://pypi.python.org/pypi/mplcyberpunk)
+[![Latest PyPI version](https://img.shields.io/pypi/v/mplcyberpunk.svg)](https://pypi.python.org/pypi/mplcyberpunk) [![Latest Travis CI build status](https://travis-ci.org/dhaitz/mplcyberpunk.png)](https://travis-ci.org/dhaitz/mplcyberpunk)
 
-[![Latest Travis CI build status](https://travis-ci.org/dhaitz/mplcyberpunk.png)](https://travis-ci.org/dhaitz/mplcyberpunk)
-
-A Python package on top of `matplotlib` to create a 'cyberpunk' style
+A Python package on top of `matplotlib` to create 'cyberpunk' style plots.
 
 ![](img/demo.png)
 
@@ -34,21 +32,16 @@ The line glow and 'underglow' effects are added via calling the respective funct
 Result: 
 
 ![](img/demo.png)
-    
 
 This effect is currently only implemented for lines.
+    
+    
+You can also add the effect to a specific axis object explicitly:
 
-
-## Stuff
-testpypi:
-
-:   twine upload --repository-url <https://test.pypi.org/legacy/>
-    dist/\*
-
-travis:
-
-:   check
-
+    fig, ax = plt.subplots()
+    ...
+    mplcyberpunk.make_lines_glow(ax)
+       
 
 
 ## Requirements
