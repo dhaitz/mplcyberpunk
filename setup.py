@@ -2,12 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup
-from pathlib import Path
 
 
 setup(
     name="mplcyberpunk",
-    version="0.1.0",
+    version="0.1.2",
     url="https://github.com/dhaitz/mplcyberpunk",
     license='MIT',
 
@@ -29,7 +28,7 @@ setup(
         "version_format": "{tag}.dev{sha}",
         "starting_version": "0.0.1"
     },
-    setup_requires=['matplotlib'],
+    install_requires=['matplotlib'],
 
     classifiers=[
         'License :: OSI Approved :: MIT License',
