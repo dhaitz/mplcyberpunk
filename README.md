@@ -24,8 +24,9 @@ The line glow and 'underglow' effects are added via calling the respective funct
     plt.plot([1, 3, 9, 5, 2, 1, 1], marker='o')
     plt.plot([4, 5, 5, 7, 9, 8, 6], marker='o')
     
-    mplcyberpunk.make_lines_glow()
-    mplcyberpunk.add_underglow()
+    add_glow_effects
+    
+    mplcyberpunk.add_glow_effects()
     
     plt.show()
     
@@ -35,6 +36,13 @@ Result:
 
 This effect is currently only implemented for lines.
     
+    
+    
+Instead of `add_glow_effects`, you can add the line glow and underglow effects separately:
+
+    mplcyberpunk.make_lines_glow()
+    mplcyberpunk.add_underglow()
+
     
 You can also add the effect to a specific axis object explicitly:
 
