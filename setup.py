@@ -30,6 +30,7 @@ setup(
     install_requires=['matplotlib'],
 
     classifiers=[
+        'Framework :: Matplotlib', 
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
     ],
