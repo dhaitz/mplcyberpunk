@@ -50,7 +50,7 @@ You can also add the effect to a specific axis object explicitly:
     ...
     mplcyberpunk.make_lines_glow(ax)
        
-
+![](img/sin.png)
 
 ## Requirements
 Depends only on `matplotlib`.
