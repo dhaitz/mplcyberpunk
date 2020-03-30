@@ -14,7 +14,7 @@ A Python package on top of `matplotlib` to create 'cyberpunk' style plots with 3
 ## Usage
 
 After importing the package, the _cyberpunk_ stylesheet (dark background etc.) is available via `plt.style.use`.
-The line glow and 'underglow' effects are added via calling the respective functions: 
+The line glow and 'underglow' effects are added via calling `add_glow_effects`: 
 
     import matplotlib.pyplot as plt
     import mplcyberpunk
@@ -34,7 +34,7 @@ Result:
 
 This effect is currently only implemented for lines.
 
-The indisvidual steps are described [here](https://matplotlib.org/matplotblog/posts/matplotlib-cyberpunk-style/) in more detail.
+The individual steps are described [here](https://matplotlib.org/matplotblog/posts/matplotlib-cyberpunk-style/) in more detail.
     
     
     
