@@ -7,6 +7,7 @@ ytick.direction: out
 #xtick.color: #2A3459
 #ytick.color: #2A3459
 axes.axisbelow: True
+axes.grid: True
 font.family: sans-serif
 font.sans-serif: Arial, Liberation Sans, DejaVu Sans, Bitstream Vera Sans, sans-serif
 grid.linestyle: -
