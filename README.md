@@ -1,7 +1,7 @@
 # mplcyberpunk
 
 
-[![Latest PyPI version](https://img.shields.io/pypi/v/mplcyberpunk.svg)](https://pypi.python.org/pypi/mplcyberpunk) [![Latest Travis CI build status](https://travis-ci.org/dhaitz/mplcyberpunk.png)](https://travis-ci.org/dhaitz/mplcyberpunk)
+[![Latest PyPI version](https://img.shields.io/pypi/v/mplcyberpunk.svg)](https://pypi.python.org/pypi/mplcyberpunk) [![Build Status](https://travis-ci.com/dhaitz/mplcyberpunk.svg?branch=master)](https://travis-ci.com/dhaitz/mplcyberpunk)
 
 A Python package on top of `matplotlib` to create 'cyberpunk' style plots with 3 additional lines of code.
 
