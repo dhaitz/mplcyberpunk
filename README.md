@@ -54,6 +54,8 @@ You can also add the effect to a specific axis object explicitly:
        
 ![](img/sin.png)
 
+The default colormap is [cool](https://user-images.githubusercontent.com/5802753/78286625-3e6e2d80-7521-11ea-978a-96ec42f5d6ca.png).
+
 ## Requirements
 Depends only on `matplotlib`.
 
