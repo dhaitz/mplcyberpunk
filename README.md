@@ -39,7 +39,8 @@ This effect is currently only implemented for lines.
 The individual steps are described [here](https://matplotlib.org/matplotblog/posts/matplotlib-cyberpunk-style/) in more detail.
     
     
-    
+#### Add effects individually
+
 Instead of `add_glow_effects`, you can add the line glow and underglow effects separately:
 
     mplcyberpunk.make_lines_glow()
@@ -54,7 +55,11 @@ You can also add the effect to a specific axis object explicitly:
        
 ![](img/sin.png)
 
-The default colormap is [cool](https://user-images.githubusercontent.com/5802753/78286625-3e6e2d80-7521-11ea-978a-96ec42f5d6ca.png).
+#### Colormap
+
+The default colormap is `cool`:
+
+![cool](https://user-images.githubusercontent.com/5802753/78286625-3e6e2d80-7521-11ea-978a-96ec42f5d6ca.png)
 
 ## Requirements
 Depends only on `matplotlib`.
