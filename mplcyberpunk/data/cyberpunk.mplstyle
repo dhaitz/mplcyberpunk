@@ -22,6 +22,8 @@ ytick.minor.size: 0
 # neon colors: teal/cyan, pink, yellow, matrix green, red, violet
 axes.prop_cycle: cycler('color', ['08F7FE', 'FE53BB', 'F5D300', '00ff41', 'r', '9467bd', ])
 
+image.cmap: cool
+
 # font color: very light grey
 text.color: 0.9
 axes.labelcolor: 0.9
