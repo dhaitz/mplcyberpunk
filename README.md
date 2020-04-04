@@ -61,6 +61,11 @@ The default colormap is `cool`:
 
 ![colormap](img/colormap.png)
 
+Others:
+
+
+![colormaps](img/colormaps.png)
+
 ## Requirements
 Depends only on `matplotlib`.
 
