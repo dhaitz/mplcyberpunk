@@ -40,6 +40,9 @@ def add_underglow(ax=None, alpha_underglow=0.1):
     if not ax:
         ax = plt.gca()
 
+    # because ax.fill_between changes axis limits, save current xy-limits to restore them later:
+    xlims, ylims = ax.get_xlim(), ax.get_ylim()
+
     lines = ax.get_lines()
 
     for line in lines:
@@ -56,3 +59,5 @@ def add_underglow(ax=None, alpha_underglow=0.1):
                         y2=[0] * len(y),
                         color=color,
                         alpha=alpha_underglow)
+
+    ax.set(xlim=xlims, ylim=ylims)
