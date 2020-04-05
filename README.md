@@ -1,7 +1,10 @@
 # mplcyberpunk
 
 
-[![Latest PyPI version](https://img.shields.io/pypi/v/mplcyberpunk.svg)](https://pypi.python.org/pypi/mplcyberpunk) [![Build Status](https://travis-ci.com/dhaitz/mplcyberpunk.svg?branch=master)](https://travis-ci.com/dhaitz/mplcyberpunk)
+[![Latest PyPI version](https://img.shields.io/pypi/v/mplcyberpunk.svg)](https://pypi.python.org/pypi/mplcyberpunk)
+[![Build Status](https://travis-ci.com/dhaitz/mplcyberpunk.svg?branch=master)](https://travis-ci.com/dhaitz/mplcyberpunk)
+[![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-370/)
+
 
 A Python package on top of `matplotlib` to create 'cyberpunk' style plots with 3 additional lines of code.
 
