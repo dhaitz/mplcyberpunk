@@ -1,7 +1,6 @@
 language: python
-
 python:
-  - 3.7
+- 3.7
 
 install:
 - python setup.py install
@@ -9,3 +8,12 @@ install:
 
 script:
 - pytest tests/tests.py
+
+deploy:
+  provider: pypi
+  user: dhaitz
+  password:
+    secure: l+WVhu3MbLlnlkGUOx1Hxzf5ywVXwcSRuf1DA8bu8f+6qjgOJYPMkHmN05gN9GqQ2RQY7GBs3y6x6dkiUWwqSWb2iUPx5eCi7aZxTGjQuGpMbkmsxZA8R2v/54eaxHv2CLrJfH0mGzFLASI4XmP8zi8dBb6bCCw+NJ+hdNTxpme3psine5xeptK1WsZsHg13dHOn1wk5TxbkBgaovtz3KICPDMQ5WnWwMTOZQyEQ9yKqLUY+1+5IKeVbbQenqCylAiPJYfWOAtz8aQ5CM66s27AcwQcyZOR9kGj3L59wVaXA51k1Cdtn/jtg+bEMaVeqBWgwqkhaMeM+aEUNQlFFK6b7UK6NC9QyCTKC1OLwFFrOjdUPbAOUzJTUQ8tLlJMo0XINb4VMK74q5Gf1PqoA5o3+4HnCNayCKb8INmcm9SfCIli24tTGkD7VqsKDXm12PmLNpDmj/hFa9zv7tHxVns6dYvT2T6+VG3ao8f/45VVA4mxUi3ZqnPA8hb2aXB3Dyj9uIsjC+MO7OnRZqByuzcJNbkde4Ywl7kfEYNYl4wxQ6LVMTWjAwBFT7uoGuYxmHlo5UKf0njv5VRKbkNxnpUDgA94e+BSIu7RocdhFVsCij1xuB0aBURywggB+qtpfatShvqtjQfkVvIbBMxsHtafR3z6zLdzC114u6tUgHUI=
+  distributions: bdist_wheel
+  on:
+    tags: true
