@@ -69,6 +69,11 @@ Others:
 
 ![colormaps](img/colormaps.png)
 
+
+## Gallery
+![europe](img/europe.png)
+![world](img/world.png)
+
 ## Requirements
 Depends only on `matplotlib`.
 
