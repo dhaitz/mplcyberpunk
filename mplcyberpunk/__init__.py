@@ -3,7 +3,7 @@
 import matplotlib as mpl
 import pkg_resources
 
-from .core import add_glow_effects, make_lines_glow, add_underglow
+from .core import add_glow_effects, make_lines_glow, add_underglow, make_scatter_glow
 
 __version__ = pkg_resources.require("mplcyberpunk")[0].version
 __author__ = 'Dominik Haitz <dominik.haitz@gmx.de>'
