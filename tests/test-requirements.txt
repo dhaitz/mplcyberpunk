@@ -1,3 +1,4 @@
 matplotlib
 pandas
+numpy
 pytest
