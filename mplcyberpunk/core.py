@@ -63,14 +63,19 @@ def add_underglow(ax=None, alpha_underglow=0.1):
     ax.set(xlim=xlims, ylim=ylims)
 
 
-def make_scatter_glow(x, y, color='#08F7FE', size=36, n_glow_lines=10, diff_dotwidth=1.2, alpha=0.3):
+def make_scatter_glow(ax=None, n_glow_lines=10, diff_dotwidth=1.2, alpha=0.3):
     """ Add glow effect to dots in scatter plot.
 
     Each plot is redrawn 10 times with increasing width to create glow effect."""
-    alpha_value = alpha/n_glow_lines
+    if not ax:
+        ax = plt.gca()
 
-    for i in range(0, n_glow_lines):
-        if i > 0:
-            plt.scatter(x, y, s=size*(diff_dotwidth**i), alpha=alpha_value, c=color)
-        else:
-            plt.scatter(x, y, s=size, alpha=1, c=color)
+    scatterpoints = ax.collections[-1]
+    x, y = scatterpoints.get_offsets().data.T
+    dot_color = scatterpoints.get_array()
+    dot_size = scatterpoints.get_sizes()
+
+    alpha = alpha/n_glow_lines
+
+    for i in range(1, n_glow_lines):
+        plt.scatter(x, y, s=dot_size*(diff_dotwidth**i), c=dot_color, alpha=alpha)
