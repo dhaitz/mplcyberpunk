@@ -58,6 +58,13 @@ You can also add the effect to a specific axis object explicitly:
 
 ![](img/sin.png)
 
+
+#### Scatter plots
+
+Glow effect can be added to scatter plots via `mplcyberpunk.make_scatter_glow()`:
+
+![](img/scatter.png)
+
 #### Colormap
 
 The default colormap is `cool`:
@@ -80,4 +87,4 @@ Depends only on `matplotlib`.
 
 ## Authors
 
-*mplcyberpunk* was written by [Dominik Haitz](https://dhaitz.github.io).
+*mplcyberpunk* was written by [Dominik Haitz](https://dhaitz.github.io) and [Mitchell Joseph](https://twitter.com/_Mitch_Joseph).
