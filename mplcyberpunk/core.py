@@ -79,3 +79,24 @@ def make_scatter_glow(ax=None, n_glow_lines=10, diff_dotwidth=1.2, alpha=0.3):
 
     for i in range(1, n_glow_lines):
         plt.scatter(x, y, s=dot_size*(diff_dotwidth**i), c=dot_color, alpha=alpha)
+
+
+def make_step_glow(ax=None, n_glow_lines=10, diff_linewidth=1.05, alpha_line=0.3):
+    """Add glow effect to lines of step plot
+
+    Each plot is redrawn 10 times with increaseing line width and decreasing alpha to create glow effect."""
+    if not ax:
+        ax = plt.gca()
+    
+    lines = ax.get_lines()
+    
+    alpha_value = alpha_line / n_glow_lines
+    
+    for line in lines:
+        data = line.get_data()
+        linewidth = line.get_linewidth()
+        line_color = line.get_color()
+    
+        # Plot step plot with varying lw/alpha    
+        for n in range(1, n_glow_lines+1):
+            glow_line = ax.step(*data, c=line_color, lw=linewidth + (diff_linewidth * n), alpha=alpha_value)
