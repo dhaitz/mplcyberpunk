@@ -102,7 +102,7 @@ def make_step_glow(ax=None, n_glow_lines=10, diff_linewidth=1.05, alpha_line=0.3
             glow_line = ax.step(*data, c=line_color, lw=linewidth + (diff_linewidth * n), alpha=alpha_value)
 
 
-def add_step_underglow(ax=None, alpha_underglow=0.2):
+def add_step_underglow(ax=None, alpha_underglow=0.1):
     """Add an 'underglow' effect, i.e. faintly color the area below the line."""
     if not ax:
         ax = plt.gca()
