@@ -100,3 +100,32 @@ def make_step_glow(ax=None, n_glow_lines=10, diff_linewidth=1.05, alpha_line=0.3
         # Plot step plot with varying lw/alpha    
         for n in range(1, n_glow_lines+1):
             glow_line = ax.step(*data, c=line_color, lw=linewidth + (diff_linewidth * n), alpha=alpha_value)
+
+
+def add_step_underglow(ax=None, alpha_underglow=0.2):
+    """Add an 'underglow' effect, i.e. faintly color the area below the line."""
+    if not ax:
+        ax = plt.gca()
+
+    # because ax.fill_between changes axis limits, save current xy-limits to restore them later:
+    xlims, ylims = ax.get_xlim(), ax.get_ylim()
+
+    lines = ax.get_lines()
+
+    for line in lines:
+
+        # don't add underglow for glow effect lines:
+        if hasattr(line, 'is_glow_line') and line.is_glow_line:
+            continue
+
+        x, y = line.get_data()
+        color = line.get_c()
+
+        ax.fill_between(x=x,
+                        y1=y,
+                        y2=[0] * len(y),
+                        color=color,
+                        step="pre",
+                        alpha=alpha_underglow)
+
+    ax.set(xlim=xlims, ylim=ylims)
