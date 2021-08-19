@@ -114,10 +114,6 @@ def add_step_underglow(ax=None, alpha_underglow=0.1):
 
     for line in lines:
 
-        # don't add underglow for glow effect lines:
-        if hasattr(line, 'is_glow_line') and line.is_glow_line:
-            continue
-
         x, y = line.get_data()
         color = line.get_c()
 
@@ -129,3 +125,8 @@ def add_step_underglow(ax=None, alpha_underglow=0.1):
                         alpha=alpha_underglow)
 
     ax.set(xlim=xlims, ylim=ylims)
+    
+def add_step_effects(ax=None):
+    """Add a glow effect to the lines in an step plot and an 'underglow' effect below the lines."""
+    add_step_underglow()
+    make_step_glow()
