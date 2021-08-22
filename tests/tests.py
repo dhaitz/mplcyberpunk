@@ -39,7 +39,6 @@ def test_step_and_normal_plot():
     plt.plot([1,2,3], [9,0,1])
 
     mplcyberpunk.add_glow_effects()
-    mplcyberpunk.add_underglow()
 
     plt.savefig("test_step.png")
 
