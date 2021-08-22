@@ -31,6 +31,19 @@ def test_plotting_working_individual_functions():
     plt.savefig("test_individual.png")
 
 
+def test_step_and_normal_plot():
+
+    plt.style.use("cyberpunk")
+
+    plt.step([1,2,3], [6,7,8])
+    plt.plot([1,2,3], [9,0,1])
+
+    mplcyberpunk.add_glow_effects()
+    mplcyberpunk.add_underglow()
+
+    plt.savefig("test_step.png")
+
+
 def test_linestyle_attributes_copied():
 
     plt.style.use("cyberpunk")
