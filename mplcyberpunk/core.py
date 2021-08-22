@@ -1,15 +1,22 @@
 # -*- coding: utf-8 -*-
 
+from typing import Optional
+
 import matplotlib.pyplot as plt
 
 
-def add_glow_effects(ax=None):
+def add_glow_effects(ax: Optional[plt.Axes] = None) -> None:
     """Add a glow effect to the lines in an axis object and an 'underglow' effect below the line."""
     make_lines_glow(ax=ax)
     add_underglow(ax=ax)
 
 
-def make_lines_glow(ax=None, n_glow_lines=10, diff_linewidth=1.05, alpha_line=0.3):
+def make_lines_glow(
+    ax: Optional[plt.Axes] = None,
+    n_glow_lines: int = 10,
+    diff_linewidth: float = 1.05,
+    alpha_line: float = 0.3,
+) -> None:
     """Add a glow effect to the lines in an axis object.
 
     Each existing line is redrawn several times with increasing width and low alpha to create the glow effect.
@@ -43,7 +50,7 @@ def make_lines_glow(ax=None, n_glow_lines=10, diff_linewidth=1.05, alpha_line=0.
             glow_line.is_glow_line = True  # mark the glow lines, to disregard them in the underglow function.
 
 
-def add_underglow(ax=None, alpha_underglow=0.1):
+def add_underglow(ax: Optional[plt.Axes] = None, alpha_underglow: float = 0.1) -> None:
     """Add an 'underglow' effect, i.e. faintly color the area below the line."""
     if not ax:
         ax = plt.gca()
@@ -77,8 +84,13 @@ def add_underglow(ax=None, alpha_underglow=0.1):
     ax.set(xlim=xlims, ylim=ylims)
 
 
-def make_scatter_glow(ax=None, n_glow_lines=10, diff_dotwidth=1.2, alpha=0.3):
-    """ Add glow effect to dots in scatter plot.
+def make_scatter_glow(
+    ax: Optional[plt.Axes] = None,
+    n_glow_lines: int = 10,
+    diff_dotwidth: float = 1.2,
+    alpha: float = 0.3,
+) -> None:
+    """Add glow effect to dots in scatter plot.
 
     Each plot is redrawn 10 times with increasing width to create glow effect."""
     if not ax:
