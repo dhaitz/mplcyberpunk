@@ -81,6 +81,8 @@ Others:
 ![europe](img/europe.png)
 ![world](img/world.png)
 
+Some images can be bought as posters [here](https://displate.com/sr-artworks/dhaitz).
+
 ## Requirements
 Depends only on `matplotlib`.
 
