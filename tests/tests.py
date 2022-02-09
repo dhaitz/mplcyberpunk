@@ -1,6 +1,5 @@
 # Sample Test passing with and pytest
 
-from unittest import expectedFailure
 import pandas as pd
 import matplotlib.pyplot as plt
 import mplcyberpunk
