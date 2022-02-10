@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from typing import Optional
+from typing import Optional, Union, List
 
+from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 
 
@@ -16,6 +17,7 @@ def make_lines_glow(
     n_glow_lines: int = 10,
     diff_linewidth: float = 1.05,
     alpha_line: float = 0.3,
+    lines: Union[Line2D, List[Line2D]] = None,
 ) -> None:
     """Add a glow effect to the lines in an axis object.
 
@@ -24,7 +26,8 @@ def make_lines_glow(
     if not ax:
         ax = plt.gca()
 
-    lines = ax.get_lines()
+    lines = ax.get_lines() if lines is None else lines
+    lines = [lines] if isinstance(lines, Line2D) else lines
 
     alpha_value = alpha_line / n_glow_lines
 

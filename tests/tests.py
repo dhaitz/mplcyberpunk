@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import mplcyberpunk
 import random
 
-
 def test_plotting_working():
     plt.style.use("cyberpunk")
 
@@ -66,6 +65,29 @@ def test_linestyle_attributes_copied():
         assert line.get_marker() == marker
         assert line.get_linestyle() == linestyle
 
+
+def test_make_specific_line_glow():
+    
+    plt.style.use("cyberpunk")
+
+    values = {c: [random.randint(0, 10) for _ in range(7)] for c in 'ABCDEFG'}
+    df = pd.DataFrame(values)
+
+    marker = 'x'
+    linestyle='--'
+    df.plot(marker=marker, linestyle=linestyle)
+
+    lines = plt.gca().lines[::2]
+    mplcyberpunk.make_lines_glow(lines=lines)
+
+    # check number of lines
+    n_original_lines = 7
+    n_glowing_original_lines = 4
+    n_lines_per_glow = 10
+    expected_num_total_lines = n_original_lines + n_glowing_original_lines * n_lines_per_glow
+    
+    new_lines = plt.gca().lines
+    assert len(new_lines) == expected_num_total_lines
 
 
 def test_axis_limits_unchanged_by_underglow():
