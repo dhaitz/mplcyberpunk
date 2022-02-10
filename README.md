@@ -59,6 +59,9 @@ You can also add the effect to a specific axis object explicitly:
 ![](img/sin.png)
 
 
+To activate the glow effect only for specific lines, pass a Line2D object or a list of Line2Ds to `make_lines_glow`.
+
+
 #### Scatter plots
 
 Glow effect can be added to scatter plots via `mplcyberpunk.make_scatter_glow()`:
@@ -89,4 +92,4 @@ Depends only on `matplotlib`.
 
 ## Authors
 
-*mplcyberpunk* was written by [Dominik Haitz](https://dhaitz.github.io) and [Mitchell Joseph](https://twitter.com/_Mitch_Joseph).
+*mplcyberpunk* was written by [Dominik Haitz](https://dhaitz.github.io), [Mitchell Joseph](https://twitter.com/_Mitch_Joseph) and [Paul Smith](https://github.com/p-j-smith).
