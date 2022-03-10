@@ -1,16 +1,24 @@
 # -*- coding: utf-8 -*-
 
 from typing import Optional, Union, List
-
+import numpy as np
 from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+from matplotlib.patches import Polygon
 
-
-def add_glow_effects(ax: Optional[plt.Axes] = None) -> None:
+def add_glow_effects(ax: Optional[plt.Axes] = None, gradientFill: bool = False) -> None:
     """Add a glow effect to the lines in an axis object and an 'underglow' effect below the line."""
-    make_lines_glow(ax=ax)
-    add_underglow(ax=ax)
-
+    # The order here is important
+    # if we call make_lines_glow() first
+    # it create new lines and gradient_fill()
+    # will take a long time to finish
+    if not gradientFill:
+        make_lines_glow(ax=ax)
+        add_underglow(ax=ax)
+    else:
+        gradient_fill(ax=ax)
+        make_lines_glow(ax=ax)
 
 def make_lines_glow(
     ax: Optional[plt.Axes] = None,
@@ -86,6 +94,36 @@ def add_underglow(ax: Optional[plt.Axes] = None, alpha_underglow: float = 0.1) -
 
     ax.set(xlim=xlims, ylim=ylims)
 
+def gradient_fill(ax: Optional[plt.Axes] = None):
+   """Add a gradient fill under each line,
+      i.e. faintly color the area below the line."""
+
+   if not ax:
+       ax = plt.gca()
+
+   lines = ax.get_lines()
+
+   for line in lines:
+       fill_color = line.get_color()
+       zorder = line.get_zorder()
+       alpha = line.get_alpha()
+       alpha = 1.0 if alpha is None else alpha
+       rgb = mcolors.colorConverter.to_rgb(fill_color)
+       z = np.empty((100, 1, 4), dtype=float)
+       z[:,:,:3] = rgb
+       z[:,:,-1] = np.linspace(0, alpha, 100)[:,None]
+       x, y = line.get_data()
+       xmin, xmax = x.min(), x.max()
+       ymin, ymax = y.min(), y.max()
+       im = ax.imshow(z, aspect='auto',
+                  extent=[xmin, xmax, ymin, ymax],
+                  origin='lower', zorder=zorder)
+       xy = np.column_stack([x, y])
+       xy = np.vstack([[xmin, ymin], xy, [xmax, ymin], [xmin, ymin]])
+       clip_path = Polygon(xy, facecolor='none', edgecolor='none', closed=True)
+       ax.add_patch(clip_path)
+       im.set_clip_path(clip_path)
+       ax.autoscale(True)
 
 def make_scatter_glow(
     ax: Optional[plt.Axes] = None,
