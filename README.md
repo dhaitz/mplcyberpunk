@@ -62,6 +62,19 @@ You can also add the effect to a specific axis object explicitly:
 To activate the glow effect only for specific lines, pass a Line2D object or a list of Line2Ds to `make_lines_glow`.
 
 
+#### Gradient glow
+
+Gradient underglow effect can be added with
+
+    mplcyberpunk.add_glow_effects(gradient_fill=True)
+
+or independently of line glow with
+
+    mplcyberpunk.add_gradient_fill(alpha_gradientglow=0.5)
+
+![underglows](img/underglows.png)
+
+
 #### Scatter plots
 
 Glow effect can be added to scatter plots via `mplcyberpunk.make_scatter_glow()`:
@@ -84,12 +97,11 @@ Others:
 ![europe](img/europe.png)
 ![world](img/world.png)
 
+![gradient-fill_1](img/gradient-fill_1.png)
+![gradient-fill_2](img/gradient-fill_2.png)
+
+
 Some images can be bought as posters [here](https://displate.com/sr-artworks/dhaitz).
 
 ## Requirements
 Depends only on `matplotlib`.
-
-
-## Authors
-
-*mplcyberpunk* was written by [Dominik Haitz](https://dhaitz.github.io), [Mitchell Joseph](https://twitter.com/_Mitch_Joseph) and [Paul Smith](https://github.com/p-j-smith).
