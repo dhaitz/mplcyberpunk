@@ -9,16 +9,13 @@ from matplotlib.patches import Polygon
 
 def add_glow_effects(ax: Optional[plt.Axes] = None, gradientFill: bool = False) -> None:
     """Add a glow effect to the lines in an axis object and an 'underglow' effect below the line."""
-    # The order here is important
-    # if we call make_lines_glow() first
-    # it create new lines and gradient_fill()
-    # will take a long time to finish
-    if not gradientFill:
-        make_lines_glow(ax=ax)
-        add_underglow(ax=ax)
-    else:
+    make_lines_glow(ax=ax)
+
+    if gradientFill:
         gradient_fill(ax=ax)
-        make_lines_glow(ax=ax)
+    else:
+        add_underglow(ax=ax)
+
 
 def make_lines_glow(
     ax: Optional[plt.Axes] = None,
@@ -105,6 +102,11 @@ def gradient_fill(ax: Optional[plt.Axes] = None):
     lines = ax.get_lines()
 
     for line in lines:
+
+        # don't add gradient fill for glow effect lines:
+        if hasattr(line, 'is_glow_line') and line.is_glow_line:
+            continue
+
         fill_color = line.get_color()
         zorder = line.get_zorder()
         alpha = line.get_alpha()
