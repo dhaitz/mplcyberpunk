@@ -94,36 +94,38 @@ def add_underglow(ax: Optional[plt.Axes] = None, alpha_underglow: float = 0.1) -
 
     ax.set(xlim=xlims, ylim=ylims)
 
+
 def gradient_fill(ax: Optional[plt.Axes] = None):
-   """Add a gradient fill under each line,
-      i.e. faintly color the area below the line."""
+    """Add a gradient fill under each line,
+       i.e. faintly color the area below the line."""
 
-   if not ax:
-       ax = plt.gca()
+    if not ax:
+        ax = plt.gca()
 
-   lines = ax.get_lines()
+    lines = ax.get_lines()
 
-   for line in lines:
-       fill_color = line.get_color()
-       zorder = line.get_zorder()
-       alpha = line.get_alpha()
-       alpha = 1.0 if alpha is None else alpha
-       rgb = mcolors.colorConverter.to_rgb(fill_color)
-       z = np.empty((100, 1, 4), dtype=float)
-       z[:,:,:3] = rgb
-       z[:,:,-1] = np.linspace(0, alpha, 100)[:,None]
-       x, y = line.get_data()
-       xmin, xmax = x.min(), x.max()
-       ymin, ymax = y.min(), y.max()
-       im = ax.imshow(z, aspect='auto',
-                  extent=[xmin, xmax, ymin, ymax],
-                  origin='lower', zorder=zorder)
-       xy = np.column_stack([x, y])
-       xy = np.vstack([[xmin, ymin], xy, [xmax, ymin], [xmin, ymin]])
-       clip_path = Polygon(xy, facecolor='none', edgecolor='none', closed=True)
-       ax.add_patch(clip_path)
-       im.set_clip_path(clip_path)
-       ax.autoscale(True)
+    for line in lines:
+        fill_color = line.get_color()
+        zorder = line.get_zorder()
+        alpha = line.get_alpha()
+        alpha = 1.0 if alpha is None else alpha
+        rgb = mcolors.colorConverter.to_rgb(fill_color)
+        z = np.empty((100, 1, 4), dtype=float)
+        z[:,:,:3] = rgb
+        z[:,:,-1] = np.linspace(0, alpha, 100)[:,None]
+        x, y = line.get_data()
+        xmin, xmax = x.min(), x.max()
+        ymin, ymax = y.min(), y.max()
+        im = ax.imshow(z, aspect='auto',
+                       extent=[xmin, xmax, ymin, ymax],
+                       origin='lower', zorder=zorder)
+        xy = np.column_stack([x, y])
+        xy = np.vstack([[xmin, ymin], xy, [xmax, ymin], [xmin, ymin]])
+        clip_path = Polygon(xy, facecolor='none', edgecolor='none', closed=True)
+        ax.add_patch(clip_path)
+        im.set_clip_path(clip_path)
+        ax.autoscale(True)
+
 
 def make_scatter_glow(
     ax: Optional[plt.Axes] = None,
