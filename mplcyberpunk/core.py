@@ -92,7 +92,7 @@ def add_underglow(ax: Optional[plt.Axes] = None, alpha_underglow: float = 0.1) -
     ax.set(xlim=xlims, ylim=ylims)
 
 
-def add_gradient_fill(ax: Optional[plt.Axes] = None):
+def add_gradient_fill(ax: Optional[plt.Axes] = None, alpha_gradientglow: float = 1.0):
     """Add a gradient fill under each line,
        i.e. faintly color the area below the line."""
 
@@ -120,6 +120,7 @@ def add_gradient_fill(ax: Optional[plt.Axes] = None):
         ymin, ymax = y.min(), y.max()
         im = ax.imshow(z, aspect='auto',
                        extent=[xmin, xmax, ymin, ymax],
+                       alpha=alpha_gradientglow,
                        origin='lower', zorder=zorder)
         xy = np.column_stack([x, y])
         xy = np.vstack([[xmin, ymin], xy, [xmax, ymin], [xmin, ymin]])
