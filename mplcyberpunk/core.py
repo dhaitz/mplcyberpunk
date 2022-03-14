@@ -7,12 +7,12 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 from matplotlib.patches import Polygon
 
-def add_glow_effects(ax: Optional[plt.Axes] = None, gradientFill: bool = False) -> None:
+def add_glow_effects(ax: Optional[plt.Axes] = None, gradient_fill: bool = False) -> None:
     """Add a glow effect to the lines in an axis object and an 'underglow' effect below the line."""
     make_lines_glow(ax=ax)
 
-    if gradientFill:
-        gradient_fill(ax=ax)
+    if gradient_fill:
+        add_gradient_fill(ax=ax)
     else:
         add_underglow(ax=ax)
 
@@ -92,7 +92,7 @@ def add_underglow(ax: Optional[plt.Axes] = None, alpha_underglow: float = 0.1) -
     ax.set(xlim=xlims, ylim=ylims)
 
 
-def gradient_fill(ax: Optional[plt.Axes] = None):
+def add_gradient_fill(ax: Optional[plt.Axes] = None):
     """Add a gradient fill under each line,
        i.e. faintly color the area below the line."""
 
