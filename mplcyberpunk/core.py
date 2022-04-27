@@ -74,9 +74,11 @@ def add_underglow(ax: Optional[plt.Axes] = None, alpha_underglow: float = 0.1) -
         if hasattr(line, 'is_glow_line') and line.is_glow_line:
             continue
 
+        # parameters to be used from original line:
         x, y = line.get_data()
         color = line.get_c()
-        
+        transform = line.get_transform()
+
         try:
             step_type = line.get_drawstyle().split('-')[1]
         except:
@@ -87,7 +89,8 @@ def add_underglow(ax: Optional[plt.Axes] = None, alpha_underglow: float = 0.1) -
                         y2=[0] * len(y),
                         color=color,
                         step=step_type,
-                        alpha=alpha_underglow)
+                        alpha=alpha_underglow,
+                        transform=transform)
 
     ax.set(xlim=xlims, ylim=ylims)
 
