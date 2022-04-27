@@ -119,6 +119,7 @@ def add_gradient_fill(ax: Optional[plt.Axes] = None, alpha_gradientglow: float =
         z[:,:,:3] = rgb
         z[:,:,-1] = np.linspace(0, alpha, 100)[:,None]
         x, y = line.get_data()
+        x, y = np.array(x), np.array(y)  # enforce x,y as numpy arrays
         xmin, xmax = x.min(), x.max()
         ymin, ymax = y.min(), y.max()
         im = ax.imshow(z, aspect='auto',
