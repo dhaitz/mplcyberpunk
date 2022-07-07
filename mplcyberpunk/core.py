@@ -38,7 +38,7 @@ def make_lines_glow(
 
     for line in lines:
 
-        data = line.get_data()
+        data = line.get_data(orig=False)
         linewidth = line.get_linewidth()
         
         try:
@@ -75,7 +75,7 @@ def add_underglow(ax: Optional[plt.Axes] = None, alpha_underglow: float = 0.1) -
             continue
 
         # parameters to be used from original line:
-        x, y = line.get_data()
+        x, y = line.get_data(orig=False)
         color = line.get_c()
         transform = line.get_transform()
 
@@ -118,7 +118,7 @@ def add_gradient_fill(ax: Optional[plt.Axes] = None, alpha_gradientglow: float =
         z = np.empty((100, 1, 4), dtype=float)
         z[:,:,:3] = rgb
         z[:,:,-1] = np.linspace(0, alpha, 100)[:,None]
-        x, y = line.get_data()
+        x, y = line.get_data(orig=False)
         x, y = np.array(x), np.array(y)  # enforce x,y as numpy arrays
         xmin, xmax = x.min(), x.max()
         ymin, ymax = y.min(), y.max()
