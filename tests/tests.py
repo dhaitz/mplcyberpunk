@@ -149,4 +149,5 @@ def test_plotting_gradient():
         mplcyberpunk.add_gradient_fill(ax)
         ax.legend([scale])
 
+    fig.set_size_inches(16, 10)
     fig.savefig("test_gradient_fill.png")
