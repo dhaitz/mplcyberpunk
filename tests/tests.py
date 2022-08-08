@@ -150,6 +150,3 @@ def test_plotting_gradient():
         ax.legend([scale])
 
     fig.savefig("test_gradient_fill.png")
-    fig.show()
-
-test_plotting_gradient()
