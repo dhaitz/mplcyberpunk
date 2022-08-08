@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import mplcyberpunk
 import random
+import numpy as np
 
 def test_plotting_working():
     plt.style.use("cyberpunk")
@@ -67,7 +68,7 @@ def test_linestyle_attributes_copied():
 
 
 def test_make_specific_line_glow():
-    
+
     plt.style.use("cyberpunk")
 
     values = {c: [random.randint(0, 10) for _ in range(7)] for c in 'ABCDEFG'}
@@ -85,7 +86,7 @@ def test_make_specific_line_glow():
     n_glowing_original_lines = 4
     n_lines_per_glow = 10
     expected_num_total_lines = n_original_lines + n_glowing_original_lines * n_lines_per_glow
-    
+
     new_lines = plt.gca().lines
     assert len(new_lines) == expected_num_total_lines
 
@@ -105,3 +106,50 @@ def test_axis_limits_unchanged_by_underglow():
 
     assert xlims == ax.get_xlim()
     assert ylims == ax.get_ylim()
+
+
+def test_plotting_gradient():
+    plt.style.use("cyberpunk")
+    fig, axes = plt.subplots(nrows=3, ncols=5)
+    axes = iter(np.array(axes).flatten())
+
+    x = np.linspace(0,7,20)
+    y = np.sin(x)
+    choices = ['min','max','top','bot','zero']
+    for choice, ax in zip(choices, axes):
+        ax.set_ylim((-1.8, 1.8))
+        ax.plot(x,y,marker='o',markersize=3)
+        mplcyberpunk.add_gradient_fill(ax, 0.6, choice)
+        ax.legend([choice])
+
+    for off,ax in zip((-3/2, -1/2, 1/2, 3/2), axes):
+        ax.set_ylim((-3, 3))
+        ax.plot(x,y+off,marker='o',markersize=3)
+        mplcyberpunk.add_gradient_fill(ax, (0.1, 0.6), 'zero')
+        ax.legend(['zero '+str(off)])
+
+    x = np.linspace(-2,2,20)
+    choices = ['min', 'top']
+    for choice, ax in zip(choices, axes):
+        ax.set_yscale('log')
+        ax.plot(x,np.exp(-x**2),marker='o',markersize=3)
+        mplcyberpunk.add_gradient_fill(ax, (0., 1.), choice, 200)
+        ax.legend(['log '+ choice])
+    for choice, ax in zip(choices, axes):
+        ax.plot(x,-x**2,marker='o',markersize=3)
+        mplcyberpunk.add_gradient_fill(ax, (0., 1.), choice)
+        ax.legend([choice + '\nreference'])
+
+    for scale, ax in zip(['symlog', 'logit'], axes):
+        ax.set_yscale(scale)
+        x = np.linspace(-50,50,20) if scale=='symlog' else np.linspace(0,1,20)
+        ax.plot(x,x,marker='o',markersize=3)
+        # it seems like imshow() fails silently for 'logit'
+        # ax.imshow(np.random.random((6, 1, 4)))
+        mplcyberpunk.add_gradient_fill(ax)
+        ax.legend([scale])
+
+    fig.savefig("test_gradient_fill.png")
+    fig.show()
+
+test_plotting_gradient()

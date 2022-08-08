@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from typing import Optional, Union, List
+from typing import Optional, Union, List, Tuple
 import numpy as np
 from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
@@ -40,7 +40,7 @@ def make_lines_glow(
 
         data = line.get_data(orig=False)
         linewidth = line.get_linewidth()
-        
+
         try:
             step_type = line.get_drawstyle().split('-')[1]
         except:
@@ -95,16 +95,46 @@ def add_underglow(ax: Optional[plt.Axes] = None, alpha_underglow: float = 0.1) -
     ax.set(xlim=xlims, ylim=ylims)
 
 
-def add_gradient_fill(ax: Optional[plt.Axes] = None, alpha_gradientglow: float = 1.0):
-    """Add a gradient fill under each line,
-       i.e. faintly color the area below the line."""
+def add_gradient_fill(
+    ax: Optional[plt.Axes] = None,
+    alpha_gradientglow: Union[float, Tuple[float,float]] = 1.0,
+    key: str = 'min',
+    N: int = 50,
+) -> None:
+    """
+    Add a gradient fill under each line, faintly coloring the area below/above the line.
+    PARAMETERS:
+    - ax
+        The matplolib axes, defaults to the global figure
+    - alpha_gradientglow
+        If float, the gradient is from 0 to alpha_gradientglow
+        If tuple[float, float], the gradient is from alpha_gradientglow[0] to alpha_gradientglow[1]
+    - key
+        Sets the point where the gradient is minimal
+        For aesthetic reasons, one may want the gradient to either start at:
+            - The minimum of each curve (default): this fills below the curve
+            - The maximum of each curve: this fills above the curve
+            - The bottom of the figure: this fills below the curve
+            - The top of the figure: this fills below the curve
+            - Zero: this fills both above and below the curve
+    - N
+        Number of sampling points. Higher may look better at the cost of performance
+    """
 
+    choices = ['min','max','top','bot','zero']
+    if not key in choices:
+        raise ValueError(f'key must be one of {choices}')
+    if type(alpha_gradientglow) == float:
+        alpha_gradientglow = (0., alpha_gradientglow)
+    if not (type(alpha_gradientglow) == tuple and type(alpha_gradientglow[0]) == type(alpha_gradientglow[0]) == float):
+        raise ValueError(f'alpha_gradientglow must be a float or a tuple of two floats but is {alpha_gradientglow}')
     if not ax:
         ax = plt.gca()
 
-    lines = ax.get_lines()
+    # because ax.imshow changes axis limits, save current xy-limits to restore them later:
+    xlims, ylims = ax.get_xlim(), ax.get_ylim()
 
-    for line in lines:
+    for line in ax.get_lines():
 
         # don't add gradient fill for glow effect lines:
         if hasattr(line, 'is_glow_line') and line.is_glow_line:
@@ -115,23 +145,56 @@ def add_gradient_fill(ax: Optional[plt.Axes] = None, alpha_gradientglow: float =
         alpha = line.get_alpha()
         alpha = 1.0 if alpha is None else alpha
         rgb = mcolors.colorConverter.to_rgb(fill_color)
-        z = np.empty((100, 1, 4), dtype=float)
+        z = np.empty((N, 1, 4), dtype=float)
         z[:,:,:3] = rgb
-        z[:,:,-1] = np.linspace(0, alpha, 100)[:,None]
+
+        # find the visual extend of the gradient
         x, y = line.get_data(orig=False)
         x, y = np.array(x), np.array(y)  # enforce x,y as numpy arrays
         xmin, xmax = x.min(), x.max()
         ymin, ymax = y.min(), y.max()
-        im = ax.imshow(z, aspect='auto',
-                       extent=[xmin, xmax, ymin, ymax],
-                       alpha=alpha_gradientglow,
-                       origin='lower', zorder=zorder)
+        Ay = {'min':ymin,'max':ymax,'top':ylims[1],'bot':ylims[0],'zero':0}[key]
+        extent = [xmin, xmax, min(ymin,Ay), max(ymax,Ay)]
+
+        # alpha will be linearly interpolated on scaler(y)
+        # {"linear","symlog","logit",...} are currentlty treated the same
+        if ax.get_yscale() == 'log':
+            if key == 'zero' : raise ValueError("key cannot be 'zero' on log plots")
+            scaler = np.log
+        else:
+            scaler = lambda x: x
+
+        a, b = alpha_gradientglow
+        ya, yb = extent[2], extent[3]
+        moment = lambda y : (scaler(y)-scaler(ya)) / (scaler(yb)-scaler(ya))
+        ys = np.linspace(ya, yb, N)
+
+        if key in ('min','bot'):
+            k = moment(ys)
+        elif key in ('top','max'):
+            k = 1 - moment(ys)
+        elif key in ('zero',):
+            abs_ys = np.abs(ys)
+            k = abs_ys / np.max(abs_ys)
+
+        alphas = k*b + (1-k)*a
+        z[:,:,-1] = alphas[:,None]
+
+        im = ax.imshow(z,
+                       aspect='auto',
+                       extent=extent,
+                       alpha=alpha,
+                       interpolation='bilinear',
+                       origin='lower',
+                       zorder=zorder)
+
         xy = np.column_stack([x, y])
-        xy = np.vstack([[xmin, ymin], xy, [xmax, ymin], [xmin, ymin]])
+        xy = np.vstack([[xmin, Ay], xy, [xmax, Ay], [xmin, Ay]])
         clip_path = Polygon(xy, facecolor='none', edgecolor='none', closed=True)
         ax.add_patch(clip_path)
         im.set_clip_path(clip_path)
-        ax.autoscale(True)
+
+    ax.set(xlim=xlims, ylim=ylims)
 
 
 def make_scatter_glow(
