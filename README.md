@@ -72,6 +72,12 @@ or independently of line glow with
 
     mplcyberpunk.add_gradient_fill(alpha_gradientglow=0.5)
 
+`add_gradient_fill` takes a `gradient_start` argument for different gradient starting values:
+
+ ![gradient_start](img/gradient_start.png)
+
+
+#### Different glow configurations:
 ![underglows](img/underglows.png)
 
 
