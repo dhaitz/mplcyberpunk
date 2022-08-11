@@ -195,7 +195,6 @@ def add_gradient_fill(
         # ax.add_patch(clip_path)
         # im.set_clip_path(clip_path)
 
-        transformedpath = line._get_transformed_path()
         path = line.get_path()
         extras = Path([[xmax,Ay],[xmin, Ay]], np.full(2, Path.MOVETO))
         extras.codes[:] = Path.LINETO
