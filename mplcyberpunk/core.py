@@ -99,7 +99,7 @@ def add_underglow(ax: Optional[plt.Axes] = None, alpha_underglow: float = 0.1) -
 def add_gradient_fill(
     ax: Optional[plt.Axes] = None,
     alpha_gradientglow: Union[float, Tuple[float,float]] = 1.0,
-    key: str = 'min',
+    gradient_start: str = 'min',
     N: int = 50,
 ) -> None:
     """
@@ -110,7 +110,7 @@ def add_gradient_fill(
     - alpha_gradientglow
         If float, the gradient is from 0 to alpha_gradientglow
         If tuple[float, float], the gradient is from alpha_gradientglow[0] to alpha_gradientglow[1]
-    - key
+    - gradient_start
         Sets the point where the gradient is minimal
         For aesthetic reasons, one may want the gradient to either start at:
             - The minimum of each curve (default): this fills below the curve
@@ -123,7 +123,7 @@ def add_gradient_fill(
     """
 
     choices = ['min','max','top','bottom','zero']
-    if not key in choices:
+    if not gradient_start in choices:
         raise ValueError(f'key must be one of {choices}')
     if type(alpha_gradientglow) == float:
         alpha_gradientglow = (0., alpha_gradientglow)
@@ -154,13 +154,13 @@ def add_gradient_fill(
         x, y = np.array(x), np.array(y)  # enforce x,y as numpy arrays
         xmin, xmax = x.min(), x.max()
         ymin, ymax = y.min(), y.max()
-        Ay = {'min':ymin,'max':ymax,'top':ylims[1],'bottom':ylims[0],'zero':0}[key]
+        Ay = {'min':ymin,'max':ymax,'top':ylims[1],'bottom':ylims[0],'zero':0}[gradient_start]
         extent = [xmin, xmax, min(ymin,Ay), max(ymax,Ay)]
 
         # alpha will be linearly interpolated on scaler(y)
         # {"linear","symlog","logit",...} are currentlty treated the same
         if ax.get_yscale() == 'log':
-            if key == 'zero' : raise ValueError("key cannot be 'zero' on log plots")
+            if gradient_start == 'zero' : raise ValueError("key cannot be 'zero' on log plots")
             scaler = np.log
         else:
             scaler = lambda x: x
@@ -170,11 +170,11 @@ def add_gradient_fill(
         moment = lambda y : (scaler(y)-scaler(ya)) / (scaler(yb)-scaler(ya))
         ys = np.linspace(ya, yb, N)
 
-        if key in ('min','bottom'):
+        if gradient_start in ('min', 'bottom'):
             k = moment(ys)
-        elif key in ('top','max'):
+        elif gradient_start in ('top', 'max'):
             k = 1 - moment(ys)
-        elif key in ('zero',):
+        elif gradient_start in ('zero',):
             abs_ys = np.abs(ys)
             k = abs_ys / np.max(abs_ys)
 
