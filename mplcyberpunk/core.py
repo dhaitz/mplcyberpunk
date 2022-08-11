@@ -100,7 +100,7 @@ def add_gradient_fill(
     ax: Optional[plt.Axes] = None,
     alpha_gradientglow: Union[float, Tuple[float,float]] = 1.0,
     gradient_start: str = 'min',
-    N: int = 50,
+    N_sampling_points: int = 50,
 ) -> None:
     """
     Add a gradient fill under each line, faintly coloring the area below/above the line.
@@ -118,7 +118,7 @@ def add_gradient_fill(
             - 'bottom': The bottom of the figure: this fills below the curve
             - 'top': The top of the figure: this fills below the curve
             - 'zero': this fills both above and below the curve
-    - N
+    - N_sampling_points
         Number of sampling points. Higher may look better at the cost of performance
     """
 
@@ -146,7 +146,7 @@ def add_gradient_fill(
         alpha = line.get_alpha()
         alpha = 1.0 if alpha is None else alpha
         rgb = mcolors.colorConverter.to_rgb(fill_color)
-        z = np.empty((N, 1, 4), dtype=float)
+        z = np.empty((N_sampling_points, 1, 4), dtype=float)
         z[:,:,:3] = rgb
 
         # find the visual extend of the gradient
@@ -168,7 +168,7 @@ def add_gradient_fill(
         a, b = alpha_gradientglow
         ya, yb = extent[2], extent[3]
         moment = lambda y : (scaler(y)-scaler(ya)) / (scaler(yb)-scaler(ya))
-        ys = np.linspace(ya, yb, N)
+        ys = np.linspace(ya, yb, N_sampling_points)
 
         if gradient_start in ('min', 'bottom'):
             k = moment(ys)
