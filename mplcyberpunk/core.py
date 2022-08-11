@@ -2,6 +2,7 @@
 
 from typing import Optional, Union, List, Tuple
 import numpy as np
+from matplotlib.path import Path
 from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
@@ -188,11 +189,18 @@ def add_gradient_fill(
                        origin='lower',
                        zorder=zorder)
 
-        xy = np.column_stack([x, y])
-        xy = np.vstack([[xmin, Ay], xy, [xmax, Ay], [xmin, Ay]])
-        clip_path = Polygon(xy, facecolor='none', edgecolor='none', closed=True)
-        ax.add_patch(clip_path)
-        im.set_clip_path(clip_path)
+        # xy = np.column_stack([x, y])
+        # xy = np.vstack([[xmin, Ay], xy, [xmax, Ay], [xmin, Ay]])
+        # clip_path = Polygon(xy, facecolor='none', edgecolor='none', closed=True)
+        # ax.add_patch(clip_path)
+        # im.set_clip_path(clip_path)
+
+        transformedpath = line._get_transformed_path()
+        path = line.get_path()
+        extras = Path([[xmax,Ay],[xmin, Ay]], np.full(2, Path.MOVETO))
+        extras.codes[:] = Path.LINETO
+        path = path.make_compound_path(path, extras)
+        im.set_clip_path(path, line._transform)
 
     ax.set(xlim=xlims, ylim=ylims)
 

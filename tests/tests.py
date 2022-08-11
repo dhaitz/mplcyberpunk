@@ -151,3 +151,20 @@ def test_plotting_gradient():
 
     fig.set_size_inches(16, 10)
     fig.savefig("test_gradient_fill.png")
+
+
+def test_gradient_step():
+    plt.style.use("cyberpunk")
+    fig, axes = plt.subplots(nrows=1, ncols=3)
+    axes = iter(np.array(axes).flatten())
+
+    x = np.linspace(0,7,20)
+    y = np.sin(x) + 1
+    choices = ['pre', 'post', 'mid']
+    for choice, ax in zip(choices, axes):
+        ax.step(x, y, where=choice, marker='o', markersize=3)
+        mplcyberpunk.add_gradient_fill(ax, 0.6, 'bot')
+        ax.legend([choice])
+
+    fig.set_size_inches(8, 5)
+    fig.savefig("test_gradient_step.png")
