@@ -113,11 +113,11 @@ def add_gradient_fill(
     - gradient_start
         Sets the point where the gradient is minimal
         For aesthetic reasons, one may want the gradient to either start at:
-            - The minimum of each curve (default): this fills below the curve
-            - The maximum of each curve: this fills above the curve
-            - The bottom of the figure: this fills below the curve
-            - The top of the figure: this fills below the curve
-            - Zero: this fills both above and below the curve
+            - 'min':  The minimum of each curve (default): this fills below the curve
+            - 'max': The maximum of each curve: this fills above the curve
+            - 'bottom': The bottom of the figure: this fills below the curve
+            - 'top': The top of the figure: this fills below the curve
+            - 'zero': this fills both above and below the curve
     - N
         Number of sampling points. Higher may look better at the cost of performance
     """
