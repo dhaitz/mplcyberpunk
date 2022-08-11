@@ -122,7 +122,7 @@ def add_gradient_fill(
         Number of sampling points. Higher may look better at the cost of performance
     """
 
-    choices = ['min','max','top','bot','zero']
+    choices = ['min','max','top','bottom','zero']
     if not key in choices:
         raise ValueError(f'key must be one of {choices}')
     if type(alpha_gradientglow) == float:
@@ -154,7 +154,7 @@ def add_gradient_fill(
         x, y = np.array(x), np.array(y)  # enforce x,y as numpy arrays
         xmin, xmax = x.min(), x.max()
         ymin, ymax = y.min(), y.max()
-        Ay = {'min':ymin,'max':ymax,'top':ylims[1],'bot':ylims[0],'zero':0}[key]
+        Ay = {'min':ymin,'max':ymax,'top':ylims[1],'bottom':ylims[0],'zero':0}[key]
         extent = [xmin, xmax, min(ymin,Ay), max(ymax,Ay)]
 
         # alpha will be linearly interpolated on scaler(y)
@@ -170,7 +170,7 @@ def add_gradient_fill(
         moment = lambda y : (scaler(y)-scaler(ya)) / (scaler(yb)-scaler(ya))
         ys = np.linspace(ya, yb, N)
 
-        if key in ('min','bot'):
+        if key in ('min','bottom'):
             k = moment(ys)
         elif key in ('top','max'):
             k = 1 - moment(ys)

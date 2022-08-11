@@ -115,7 +115,7 @@ def test_plotting_gradient():
 
     x = np.linspace(0,7,20)
     y = np.sin(x)
-    choices = ['min','max','top','bot','zero']
+    choices = ['min','max','top','bottom','zero']
     for choice, ax in zip(choices, axes):
         ax.set_ylim((-1.8, 1.8))
         ax.plot(x,y,marker='o',markersize=3)
@@ -163,7 +163,7 @@ def test_gradient_step():
     choices = ['pre', 'post', 'mid']
     for choice, ax in zip(choices, axes):
         ax.step(x, y, where=choice, marker='o', markersize=3)
-        mplcyberpunk.add_gradient_fill(ax, 0.6, 'bot')
+        mplcyberpunk.add_gradient_fill(ax, 0.6, 'bottom')
         ax.legend([choice])
 
     fig.set_size_inches(8, 5)
