@@ -1,11 +1,11 @@
 language: python
 python:
-- 3.8
+  - 3.8
 install:
-- python setup.py install
-- pip install -r tests/test-requirements.txt
+  - python setup.py install
+  - pip install -r tests/test-requirements.txt
 script:
-- pytest tests/tests.py
+  - pytest tests/tests.py
 deploy:
   provider: pypi
   user: "__token__"
