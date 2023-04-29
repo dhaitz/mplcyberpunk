@@ -47,6 +47,10 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: python-dist
+    - name: check
+      run: |
+        ls
+        ls dist
     - name: Publish distribution to Test PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
