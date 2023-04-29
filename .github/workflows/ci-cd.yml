@@ -47,6 +47,7 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: python-dist
+        path: dist/
     - name: check
       run: |
         ls
