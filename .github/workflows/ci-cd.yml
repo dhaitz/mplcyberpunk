@@ -22,13 +22,7 @@ jobs:
         pip install -r tests/test-requirements.txt
         pytest tests/tests.py
     - name: Build a binary wheel and a source tarball
-      run: >-
-        python -m
-        build
-        --sdist
-        --wheel
-        --outdir dist/
-        .
+      run: python setup.py bdist_wheel
     - name: Publish distribution to Test PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
