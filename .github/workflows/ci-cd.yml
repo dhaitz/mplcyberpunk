@@ -3,15 +3,9 @@ name: CI/CD
 on: push
 
 jobs:
-  build-publish:
+  test:
     runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/p/mplcyberpunk
-    permissions:
-      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
     steps:
-    # retrieve your distributions here
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
       with:
@@ -21,20 +15,32 @@ jobs:
         python setup.py install
         pip install -r tests/test-requirements.txt
         pytest tests/tests.py
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    environment:
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
     - name: Install pypa/build
-      run: >-
-        python -m
-        pip install
-        build
-        --user
+      run: python -m pip install build --user
     - name: Build a binary wheel and a source tarball
-      run: >-
-        python -m
-        build
-        --sdist
-        --wheel
-        --outdir dist/
-        .
+      run: python -m build --sdist --wheel --outdir dist/ .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/mplcyberpunk
+    permissions:
+      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+    steps:
+    # retrieve your distributions here
+    - uses: actions/checkout@v3
     - name: Publish distribution to Test PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
