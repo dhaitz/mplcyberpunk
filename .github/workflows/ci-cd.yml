@@ -1,4 +1,4 @@
-name: CI/CD
+name: Test-Build-Deploy
 
 on: push
 
@@ -48,10 +48,6 @@ jobs:
       with:
         name: python-dist
         path: dist/
-    - name: check
-      run: |
-        ls
-        ls dist
     - name: Publish distribution to Test PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
