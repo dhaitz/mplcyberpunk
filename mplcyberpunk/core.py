@@ -2,11 +2,13 @@
 
 from typing import Optional, Union, List, Tuple
 import numpy as np
+import matplotlib as mpl
 from matplotlib.path import Path
 from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 from matplotlib.patches import Polygon
+
 
 def add_glow_effects(ax: Optional[plt.Axes] = None, gradient_fill: bool = False) -> None:
     """Add a glow effect to the lines in an axis object and an 'underglow' effect below the line."""
@@ -225,3 +227,38 @@ def make_scatter_glow(
 
     for i in range(1, n_glow_lines):
         plt.scatter(x, y, s=dot_size*(diff_dotwidth**i), c=dot_color, alpha=alpha)
+
+
+def add_bar_gradient(
+    bars: mpl.container.BarContainer,
+    ax: Optional[plt.Axes] = None
+) -> None:
+    """Replace each bar with a rectangle filled with a color gradient going transparent"""
+
+    if not ax:
+        ax = plt.gca()
+
+    # freeze axis limits before calling imshow
+    ax.axis()
+    ax.autoscale(False)
+
+    for bar in bars:
+
+        # get properties of existing bar
+        x, y = bar.get_xy()
+        width, height = bar.get_width(), bar.get_height()
+        zorder = bar.zorder
+        color = bar.get_facecolor()
+
+        cmap = mcolors.LinearSegmentedColormap.from_list('gradient_cmap', [(color[0], color[1], color[2], 0), color])
+
+        ax.imshow(
+            X=[[1, 1],[0, 0]],  # pseudo-image
+            extent=[x, x+width, y, y+height],
+            cmap=cmap,
+            zorder=zorder,
+            interpolation='bicubic',
+            aspect='auto',  # to prevent mpl from auto-scaling axes equally
+        )
+
+        bar.remove()
