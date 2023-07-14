@@ -37,7 +37,7 @@ Result:
 
 ![](img/demo.png)
 
-This effect is currently only implemented for lines.
+This effect is currently only implemented for lines and bars.
 
 The individual steps are described [here](https://matplotlib.org/matplotblog/posts/matplotlib-cyberpunk-style/) in more detail.
 
@@ -60,7 +60,6 @@ You can also add the effect to a specific axis object explicitly:
 
 
 To activate the glow effect only for specific lines, pass a Line2D object or a list of Line2Ds to `make_lines_glow`.
-
 
 #### Gradient glow
 
@@ -101,6 +100,8 @@ Others:
 
 #### Bar charts
 
+Gradients can be added to bar charts via `mplcyberpunk.add_bar_gradient()`:
+
 ```python
 import matplotlib.pyplot as plt
 import mplcyberpunk
@@ -118,9 +119,37 @@ mplcyberpunk.add_bar_gradient(bars=bars)
 plt.show()
 ```
 
-![colormap](img/gradient_bars.png)
+![gradient bars](img/gradient_bars.png)
 
+It is also possible to make the outlines of bars glow using `mplcyberpunk.make_bars_glow()`:
 
+```python
+import matplotlib.pyplot as plt
+import mplcyberpunk
+
+plt.style.use('cyberpunk')
+
+categories = ['A', 'B', 'C', 'D', 'E']
+values = [25, 67, 19, 45, 10]
+colors = ["C0", "C1", "C2", "C3", "C4"]
+
+bars = plt.bar(categories, values, color=colors, zorder=2)
+
+mplcyberpunk.make_bars_glow(bars=bars)
+
+plt.show()
+```
+
+![glow bars](img/glow_bars.png)
+
+Both gradient and glow can be combined using:
+
+```
+mplcyberpunk.make_bars_glow(bars=bars)
+mplcyberpunk.add_bar_gradient(bars=bars)
+```
+
+![gradient and glow bars](img/gradient_and_glow_bars.png)
 
 ## Gallery
 ![europe](img/europe.png)
