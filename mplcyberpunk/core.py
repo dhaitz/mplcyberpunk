@@ -262,3 +262,46 @@ def add_bar_gradient(
         )
 
         bar.remove()
+
+
+def make_bars_glow(
+    bars: mpl.container.BarContainer,
+    ax: Optional[plt.Axes] = None,
+    n_glow_lines: int = 10,
+    diff_linewidth: float = 1.05,
+    alpha_line: float = 0.3,
+    alpha_bar: float = 0.5,
+) -> None:
+    """Add a glow effect to the outline of bars in an axis object."""
+
+    if not ax:
+        ax = plt.gca()
+
+    outlines = []
+    for bar in bars:
+        # get properties of existing bar
+        x, y = bar.get_xy()
+        width, height = bar.get_width(), bar.get_height()
+        zorder = bar.zorder
+        color = bar.get_facecolor()
+
+        outlines += [
+            Line2D([x, x+width], [y+height, y+height], color=color, zorder=zorder),  # top
+            Line2D([x, x], [y, y+height], color=color, zorder=zorder),  # left
+            Line2D([x+width, x+width], [y, y+height], color=color, zorder=zorder),  # right
+            Line2D([x, x+width], [y, y], color=color, zorder=zorder),  # bottom
+        ]
+
+        # reduce alpha of bar fill so that line glow will stand out
+        bar.set_alpha(alpha_bar)
+
+    for line in outlines:
+        ax.add_line(line)
+
+    make_lines_glow(
+        ax=ax,
+        n_glow_lines=n_glow_lines,
+        diff_linewidth=diff_linewidth,
+        alpha_line=alpha_line,
+        lines=outlines,
+    )
