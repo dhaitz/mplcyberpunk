@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import mplcyberpunk
 import random
 import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
 
 def test_plotting_working():
     plt.style.use("cyberpunk")
@@ -183,3 +184,61 @@ def test_gradient_bars():
     mplcyberpunk.add_bar_gradient(bars=bars, ax=ax)
 
     fig.savefig('test_gradient_bars.png')
+
+def test_3d_scatter_glow():
+    plt.style.use('cyberpunk')
+    plt.rcParams['figure.facecolor'] = '#000000'
+    plt.rcParams['axes.facecolor'] = '#000000'
+    plt.rcParams['axes3d.xaxis.panecolor'] = '#101010'
+    plt.rcParams['axes3d.yaxis.panecolor'] = '#101010'
+    plt.rcParams['axes3d.zaxis.panecolor'] = '#101010'
+
+    fig = plt.figure(figsize=(10, 10))
+
+    ax = fig.add_subplot(111, projection="3d")
+
+    colors = ["C0", "C1", "C2"]
+
+    labels = ["label1", "label2", "label3"]
+
+    data = {
+        "label1": {
+            "x": np.random.rand(30, 1),
+            "y": np.random.rand(30, 1),
+            "z": np.random.rand(30, 1),
+        },
+        "label2": {
+            "x": np.random.rand(10, 1),
+            "y": np.random.rand(10, 1),
+            "z": np.random.rand(10, 1),
+        },
+        "label3": {
+            "x": np.random.rand(50, 1),
+            "y": np.random.rand(50, 1),
+            "z": np.random.rand(50, 1),
+        }
+    }
+
+    for i, label in enumerate(labels):
+        single_scatter_x = data[label]["x"]
+        single_scatter_y = data[label]["y"]
+        single_scatter_z = data[label]["z"]
+
+        ax.scatter(
+            single_scatter_x,
+            single_scatter_y,
+            single_scatter_z,
+            s=180,
+            color=colors[i],
+            label=label,
+        )
+    
+    collections = [c for c in ax.collections]
+    for collection in collections:
+        mplcyberpunk.make_3d_scatter_collection_glow(ax, collection, alpha=0.3, n_glow_lines=10, diff_dotwidth=1.2)
+
+    ax.set_title("3d Scatter Glow Test")
+
+    fig.savefig("test_3d_scatter_glow.png")
+
+    plt.show()

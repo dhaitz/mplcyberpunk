@@ -8,6 +8,8 @@ from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 from matplotlib.patches import Polygon
+import mpl_toolkits
+from mpl_toolkits.mplot3d import Axes3D
 
 
 def add_glow_effects(ax: Optional[plt.Axes] = None, gradient_fill: bool = False) -> None:
@@ -262,3 +264,43 @@ def add_bar_gradient(
         )
 
         bar.remove()
+
+def make_3d_scatter_collection_glow(
+    ax: plt.axes,
+    collection: mpl_toolkits.mplot3d.art3d.Path3DCollection,
+    n_glow_lines: int = 10,
+    diff_dotwidth: float = 1.2,
+    alpha: float = 0.3,
+) -> None:
+    """
+    Add glow effect to a specific collection in the 3d scatter plot.
+    Copies the idea from make_scatter_glow(), but targets a single collection
+    in 3d space.
+
+    Done on only a single collection because applying to all collections
+    using something like shown below would not only plot the glow scatters
+    for the first collection, and none of the other ones.
+
+    I suppose this may be nice if a user wants to glow only a specific label
+    on the scatter.
+
+    ```py
+    for collection in ax.collections:
+        <code below here>
+    ```
+
+    """
+
+    try:
+        # get the x, y, and z cords of the points
+        x, y, z = collection._offsets3d
+        # get the colors of this collection of points
+        dot_color = collection.get_facecolors()
+        # get the size of dots from this collection
+        dot_size = collection.get_sizes()
+
+        alpha = alpha/n_glow_lines
+        for _ in range(1, n_glow_lines):
+            ax.scatter(x, y, z, s=dot_size*(diff_dotwidth**_), c=dot_color, alpha=alpha)
+    except:
+        pass
