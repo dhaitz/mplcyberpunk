@@ -277,8 +277,8 @@ def make_3d_scatter_collection_glow(
     Copies the idea from make_scatter_glow(), but targets a single collection
     in 3d space.
 
-    Done on only a single collection because applying to all collections
-    using something like shown below would not only plot the glow scatters
+    Done on only a single collection because applying to all collections,
+    using something like shown below, would only plot the glow scatters
     for the first collection, and none of the other ones.
 
     I suppose this may be nice if a user wants to glow only a specific label
