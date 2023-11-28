@@ -183,3 +183,33 @@ def test_gradient_bars():
     mplcyberpunk.add_bar_gradient(bars=bars, ax=ax)
 
     fig.savefig('test_gradient_bars.png')
+
+
+def test_glow_bars():
+    plt.style.use('cyberpunk')
+    fig, ax = plt.subplots()
+
+    categories = ['A', 'B', 'C', 'D', 'E']
+    values = [25, 67, 19, 45, 10]
+    colors = ["C0", "C1", "C2", "C3", "C4"]
+
+    bars = ax.bar(categories, values, color=colors, zorder=2)
+
+    mplcyberpunk.make_bars_glow(ax=ax, bars=bars)
+
+    fig.savefig('test_glow_bars.png')
+
+
+def test_glow_bars_horizontal():
+    plt.style.use('cyberpunk')
+    fig, ax = plt.subplots()
+
+    categories = ['A', 'B', 'C', 'D', 'E']
+    values = [25, 67, 19, 45, 10]
+    colors = ["C0", "C1", "C2", "C3", "C4"]
+
+    bars = ax.barh(categories, values, color=colors, zorder=2)
+
+    mplcyberpunk.make_bars_glow(ax=ax, bars=bars)
+
+    fig.savefig('test_glow_bars_horizontal.png')
