@@ -231,12 +231,15 @@ def make_scatter_glow(
 
 def add_bar_gradient(
     bars: mpl.container.BarContainer,
-    ax: Optional[plt.Axes] = None
+    ax: Optional[plt.Axes] = None,
+    horizontal: bool = False,
 ) -> None:
     """Replace each bar with a rectangle filled with a color gradient going transparent"""
 
     if not ax:
         ax = plt.gca()
+
+    X = [[0, 1],[0, 1]] if horizontal else [[1, 1],[0, 0]]
 
     # freeze axis limits before calling imshow
     ax.axis()
@@ -253,7 +256,7 @@ def add_bar_gradient(
         cmap = mcolors.LinearSegmentedColormap.from_list('gradient_cmap', [(color[0], color[1], color[2], 0), color])
 
         ax.imshow(
-            X=[[1, 1],[0, 0]],  # pseudo-image
+            X=X,  # pseudo-image
             extent=[x, x+width, y, y+height],
             cmap=cmap,
             zorder=zorder,
