@@ -23,11 +23,8 @@ setup(
     install_requires=['matplotlib'],
 
     # Derive version from git. If HEAD is at the tag, the version will be the tag itself.
-    version_config={
-        "version_format": "{tag}.dev{sha}",
-        "starting_version": "v0.0.1"
-    },
-    setup_requires=['better-setuptools-git-version'],
+    setup_requires=['setuptools-scm'],
+    use_scm_version=True,
 
     classifiers=[
         'Framework :: Matplotlib', 
