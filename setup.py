@@ -19,8 +19,9 @@ setup(
     packages=["mplcyberpunk"],
     package_data={
       'mplcyberpunk': ['data/*.mplstyle'],
-   },
-    install_requires=['matplotlib'],
+    },
+    python_requires='>=3.8',
+    install_requires=['matplotlib', 'numpy'],
 
     # Derive version from git. If HEAD is at the tag, the version will be the tag itself.
     setup_requires=['setuptools-scm'],
@@ -32,4 +33,5 @@ setup(
         'Programming Language :: Python :: 3',
     ],
     zip_safe=False,
+
 )
