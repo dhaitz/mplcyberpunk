@@ -1,4 +1,0 @@
-numpy>=1.17.3
-matplotlib
-pandas
-pytest

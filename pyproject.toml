@@ -1,2 +1,28 @@
-[build-system]
-requires = ["setuptools>=60", "setuptools-scm>=8.0"]
+[project]
+name = "mplcyberpunk"
+version = "0.7.3"  # setting this here manually until uv supports dynamic versions properly
+description = "Add-on for Matplotlib to produce 'Cyberpunk' style plots"
+readme = "README.md"
+license = {text = "MIT License"}
+requires-python = ">=3.9"
+authors = [
+    { name = "Dominik Haitz", email = "dominik.haitz@gmx.de" },
+]
+classifiers = [
+    "Framework :: Matplotlib",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "matplotlib",
+    "numpy>1.24.4",
+]
+
+[project.urls]
+Homepage = "https://github.com/dhaitz/mplcyberpunk"
+
+[project.optional-dependencies]
+test = [
+    "pandas",
+    "pytest"
+]

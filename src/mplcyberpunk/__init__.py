@@ -11,6 +11,6 @@ __author__ = 'Dominik Haitz <dominik.haitz@gmx.de>'
 __all__ = []
 
 # register the included stylesheet in the mpl style library
-with importlib.resources.path('mplcyberpunk', 'data/') as data_path:
+with importlib.resources.path('mplcyberpunk', 'data') as data_path:
     cyberpunk_stylesheets = mpl.style.core.read_style_directory(data_path)
     mpl.style.core.update_nested_dict(mpl.style.library, cyberpunk_stylesheets)

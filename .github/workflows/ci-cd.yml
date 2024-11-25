@@ -6,49 +6,29 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: "3.9"
-    - name: Run tests
-      run: |
-        python setup.py install
-        pip install -r tests/test-requirements.txt
-        pytest tests/tests.py
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv python install 3.12 
+      - run: uv sync --extra test
+      - run: uv pip install -e .
+      - run: uv run pytest tests/tests.py
 
   build:
     needs: test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0  # this also checks out git tags, which are needed to set the package version
-    - uses: actions/setup-python@v4
-      with:
-        python-version: "3.9"
-    - name: Build a binary wheel and a source tarball
-      run: pip install wheel && python setup.py sdist bdist_wheel
-    - uses: actions/upload-artifact@v3
-      with:
-        name: python-dist
-        path: dist/
-        retention-days: 1
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv python install 3.12 
+      - run: uv build
 
   deploy:
     if: startsWith(github.ref, 'refs/tags')
     needs: build
     runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/p/mplcyberpunk
-    permissions:
-      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
     steps:
-    - uses: actions/download-artifact@v4.1.7
-      with:
-        name: python-dist
-        path: dist/
-    - name: Publish distribution to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        password: ${{ secrets.PYPI_API_TOKEN }}
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv python install 3.12 
+      - run: uv build
+      - run: uv publish -t ${{ secrets.PYPI_API_TOKEN }}
