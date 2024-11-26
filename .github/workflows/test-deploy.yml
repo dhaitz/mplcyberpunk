@@ -1,0 +1,25 @@
+name: Test-Deploy
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv python install 3.12 
+      - run: uv sync --extra test
+      - run: uv pip install -e .
+      - run: uv run pytest tests/tests.py
+
+  deploy:
+    if: startsWith(github.ref, 'refs/tags')
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv python install 3.12 
+      - run: uv build
+      - run: uv publish -t ${{ secrets.PYPI_API_TOKEN }}
