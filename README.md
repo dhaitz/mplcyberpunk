@@ -2,8 +2,8 @@
 
 
 [![Latest PyPI version](https://img.shields.io/pypi/v/mplcyberpunk.svg)](https://pypi.python.org/pypi/mplcyberpunk)
-[![Build Status](https://travis-ci.com/dhaitz/mplcyberpunk.svg?branch=master)](https://travis-ci.com/dhaitz/mplcyberpunk)
-[![Python 3.9](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-390/)
+![example workflow](https://github.com/dhaitz/mplcyberpunk/actions/workflows/test-deploy.yml/badge.svg)
+![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)
 
 
 A Python package on top of `matplotlib` to create 'cyberpunk' style plots with 3 additional lines of code.
@@ -20,17 +20,17 @@ After importing the package, the _cyberpunk_ stylesheet (dark background etc.) i
 The line glow and 'underglow' effects are added via calling `add_glow_effects`:
 
 ```python
-    import matplotlib.pyplot as plt
-    import mplcyberpunk
+import matplotlib.pyplot as plt
+import mplcyberpunk
 
-    plt.style.use("cyberpunk")
+plt.style.use("cyberpunk")
 
-    plt.plot([1, 3, 9, 5, 2, 1, 1], marker='o')
-    plt.plot([4, 5, 5, 7, 9, 8, 6], marker='o')
+plt.plot([1, 3, 9, 5, 2, 1, 1], marker='o')
+plt.plot([4, 5, 5, 7, 9, 8, 6], marker='o')
 
-    mplcyberpunk.add_glow_effects()
+mplcyberpunk.add_glow_effects()
 
-    plt.show()
+plt.show()
 ```
 
 Result:
