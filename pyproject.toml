@@ -26,3 +26,7 @@ test = [
     "pandas",
     "pytest"
 ]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
