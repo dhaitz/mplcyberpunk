@@ -17,6 +17,8 @@ jobs:
     if: startsWith(github.ref, 'refs/tags')
     needs: test
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v3
