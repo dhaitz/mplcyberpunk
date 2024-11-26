@@ -3,7 +3,7 @@
 
 [![Latest PyPI version](https://img.shields.io/pypi/v/mplcyberpunk.svg)](https://pypi.python.org/pypi/mplcyberpunk)
 ![example workflow](https://github.com/dhaitz/mplcyberpunk/actions/workflows/test-deploy.yml/badge.svg)
-![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)
+![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)
 
 
 A Python package on top of `matplotlib` to create 'cyberpunk' style plots with 3 additional lines of code.
