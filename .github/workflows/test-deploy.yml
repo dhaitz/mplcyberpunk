@@ -22,4 +22,4 @@ jobs:
       - uses: astral-sh/setup-uv@v3
       - run: uv python install 3.12 
       - run: uv build
-      - run: uv publish -t ${{ secrets.PYPI_API_TOKEN }}
+      - run: uv publish
