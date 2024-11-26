@@ -1,4 +1,4 @@
-name: Test-Build-Deploy
+name: Test-Deploy
 
 on: push
 
@@ -13,18 +13,9 @@ jobs:
       - run: uv pip install -e .
       - run: uv run pytest tests/tests.py
 
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v3
-      - run: uv python install 3.12 
-      - run: uv build
-
   deploy:
     if: startsWith(github.ref, 'refs/tags')
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
