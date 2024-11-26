@@ -47,3 +47,5 @@ MANIFEST
 
 # Per-project virtualenvs
 .venv*/
+
+uv.lock
