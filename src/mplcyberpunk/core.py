@@ -10,7 +10,9 @@ import matplotlib.colors as mcolors
 from matplotlib.patches import Polygon
 
 
-def add_glow_effects(ax: Optional[plt.Axes] = None, gradient_fill: bool = False) -> None:
+def add_glow_effects(
+    ax: Optional[plt.Axes] = None, gradient_fill: bool = False
+) -> None:
     """Add a glow effect to the lines in an axis object and an 'underglow' effect below the line."""
     make_lines_glow(ax=ax)
 
@@ -40,21 +42,22 @@ def make_lines_glow(
     alpha_value = alpha_line / n_glow_lines
 
     for line in lines:
-
         data = line.get_data(orig=False)
         linewidth = line.get_linewidth()
 
         try:
-            step_type = line.get_drawstyle().split('-')[1]
+            step_type = line.get_drawstyle().split("-")[1]
         except:
             step_type = None
 
         for n in range(1, n_glow_lines + 1):
             if step_type:
-                glow_line, = ax.step(*data)
+                (glow_line,) = ax.step(*data)
             else:
-                glow_line, = ax.plot(*data)
-            glow_line.update_from(line)  # line properties are copied as seen in this solution: https://stackoverflow.com/a/54688412/3240855
+                (glow_line,) = ax.plot(*data)
+            glow_line.update_from(
+                line
+            )  # line properties are copied as seen in this solution: https://stackoverflow.com/a/54688412/3240855
 
             glow_line.set_alpha(alpha_value)
             glow_line.set_linewidth(linewidth + (diff_linewidth * n))
@@ -72,9 +75,8 @@ def add_underglow(ax: Optional[plt.Axes] = None, alpha_underglow: float = 0.1) -
     lines = ax.get_lines()
 
     for line in lines:
-
         # don't add underglow for glow effect lines:
-        if hasattr(line, 'is_glow_line') and line.is_glow_line:
+        if hasattr(line, "is_glow_line") and line.is_glow_line:
             continue
 
         # parameters to be used from original line:
@@ -83,25 +85,27 @@ def add_underglow(ax: Optional[plt.Axes] = None, alpha_underglow: float = 0.1) -
         transform = line.get_transform()
 
         try:
-            step_type = line.get_drawstyle().split('-')[1]
+            step_type = line.get_drawstyle().split("-")[1]
         except:
             step_type = None
 
-        ax.fill_between(x=x,
-                        y1=y,
-                        y2=[0] * len(y),
-                        color=color,
-                        step=step_type,
-                        alpha=alpha_underglow,
-                        transform=transform)
+        ax.fill_between(
+            x=x,
+            y1=y,
+            y2=[0] * len(y),
+            color=color,
+            step=step_type,
+            alpha=alpha_underglow,
+            transform=transform,
+        )
 
     ax.set(xlim=xlims, ylim=ylims)
 
 
 def add_gradient_fill(
     ax: Optional[plt.Axes] = None,
-    alpha_gradientglow: Union[float, Tuple[float,float]] = 1.0,
-    gradient_start: str = 'min',
+    alpha_gradientglow: Union[float, Tuple[float, float]] = 1.0,
+    gradient_start: str = "min",
     N_sampling_points: int = 50,
 ) -> None:
     """
@@ -124,13 +128,18 @@ def add_gradient_fill(
         Number of sampling points. Higher may look better at the cost of performance
     """
 
-    choices = ['min','max','top','bottom','zero']
+    choices = ["min", "max", "top", "bottom", "zero"]
     if not gradient_start in choices:
-        raise ValueError(f'key must be one of {choices}')
+        raise ValueError(f"key must be one of {choices}")
     if type(alpha_gradientglow) == float:
-        alpha_gradientglow = (0., alpha_gradientglow)
-    if not (type(alpha_gradientglow) == tuple and type(alpha_gradientglow[0]) == type(alpha_gradientglow[0]) == float):
-        raise ValueError(f'alpha_gradientglow must be a float or a tuple of two floats but is {alpha_gradientglow}')
+        alpha_gradientglow = (0.0, alpha_gradientglow)
+    if not (
+        type(alpha_gradientglow) == tuple
+        and type(alpha_gradientglow[0]) == type(alpha_gradientglow[0]) == float
+    ):
+        raise ValueError(
+            f"alpha_gradientglow must be a float or a tuple of two floats but is {alpha_gradientglow}"
+        )
     if not ax:
         ax = plt.gca()
 
@@ -138,9 +147,8 @@ def add_gradient_fill(
     xlims, ylims = ax.get_xlim(), ax.get_ylim()
 
     for line in ax.get_lines():
-
         # don't add gradient fill for glow effect lines:
-        if hasattr(line, 'is_glow_line') and line.is_glow_line:
+        if hasattr(line, "is_glow_line") and line.is_glow_line:
             continue
 
         fill_color = line.get_color()
@@ -149,47 +157,52 @@ def add_gradient_fill(
         alpha = 1.0 if alpha is None else alpha
         rgb = mcolors.colorConverter.to_rgb(fill_color)
         z = np.empty((N_sampling_points, 1, 4), dtype=float)
-        z[:,:,:3] = rgb
+        z[:, :, :3] = rgb
 
         # find the visual extend of the gradient
         x, y = line.get_data(orig=False)
         x, y = np.array(x), np.array(y)  # enforce x,y as numpy arrays
         xmin, xmax = x.min(), x.max()
         ymin, ymax = y.min(), y.max()
-        Ay = {'min':ymin,'max':ymax,'top':ylims[1],'bottom':ylims[0],'zero':0}[gradient_start]
-        extent = [xmin, xmax, min(ymin,Ay), max(ymax,Ay)]
+        Ay = {"min": ymin, "max": ymax, "top": ylims[1], "bottom": ylims[0], "zero": 0}[
+            gradient_start
+        ]
+        extent = [xmin, xmax, min(ymin, Ay), max(ymax, Ay)]
 
         # alpha will be linearly interpolated on scaler(y)
         # {"linear","symlog","logit",...} are currentlty treated the same
-        if ax.get_yscale() == 'log':
-            if gradient_start == 'zero' : raise ValueError("key cannot be 'zero' on log plots")
+        if ax.get_yscale() == "log":
+            if gradient_start == "zero":
+                raise ValueError("key cannot be 'zero' on log plots")
             scaler = np.log
         else:
             scaler = lambda x: x
 
         a, b = alpha_gradientglow
         ya, yb = extent[2], extent[3]
-        moment = lambda y : (scaler(y)-scaler(ya)) / (scaler(yb)-scaler(ya))
+        moment = lambda y: (scaler(y) - scaler(ya)) / (scaler(yb) - scaler(ya))
         ys = np.linspace(ya, yb, N_sampling_points)
 
-        if gradient_start in ('min', 'bottom'):
+        if gradient_start in ("min", "bottom"):
             k = moment(ys)
-        elif gradient_start in ('top', 'max'):
+        elif gradient_start in ("top", "max"):
             k = 1 - moment(ys)
-        elif gradient_start in ('zero',):
+        elif gradient_start in ("zero",):
             abs_ys = np.abs(ys)
             k = abs_ys / np.max(abs_ys)
 
-        alphas = k*b + (1-k)*a
-        z[:,:,-1] = alphas[:,None]
+        alphas = k * b + (1 - k) * a
+        z[:, :, -1] = alphas[:, None]
 
-        im = ax.imshow(z,
-                       aspect='auto',
-                       extent=extent,
-                       alpha=alpha,
-                       interpolation='bilinear',
-                       origin='lower',
-                       zorder=zorder)
+        im = ax.imshow(
+            z,
+            aspect="auto",
+            extent=extent,
+            alpha=alpha,
+            interpolation="bilinear",
+            origin="lower",
+            zorder=zorder,
+        )
 
         # xy = np.column_stack([x, y])
         # xy = np.vstack([[xmin, Ay], xy, [xmax, Ay], [xmin, Ay]])
@@ -198,7 +211,7 @@ def add_gradient_fill(
         # im.set_clip_path(clip_path)
 
         path = line.get_path()
-        extras = Path([[xmax,Ay],[xmin, Ay]], np.full(2, Path.MOVETO))
+        extras = Path([[xmax, Ay], [xmin, Ay]], np.full(2, Path.MOVETO))
         extras.codes[:] = Path.LINETO
         path = path.make_compound_path(path, extras)
         im.set_clip_path(path, line._transform)
@@ -223,10 +236,10 @@ def make_scatter_glow(
     dot_color = scatterpoints.get_array()
     dot_size = scatterpoints.get_sizes()
 
-    alpha = alpha/n_glow_lines
+    alpha = alpha / n_glow_lines
 
     for i in range(1, n_glow_lines):
-        plt.scatter(x, y, s=dot_size*(diff_dotwidth**i), c=dot_color, alpha=alpha)
+        plt.scatter(x, y, s=dot_size * (diff_dotwidth**i), c=dot_color, alpha=alpha)
 
 
 def add_bar_gradient(
@@ -239,29 +252,30 @@ def add_bar_gradient(
     if not ax:
         ax = plt.gca()
 
-    X = [[0, 1],[0, 1]] if horizontal else [[1, 1],[0, 0]]
+    X = [[0, 1], [0, 1]] if horizontal else [[1, 1], [0, 0]]
 
     # freeze axis limits before calling imshow
     ax.axis()
     ax.autoscale(False)
 
     for bar in bars:
-
         # get properties of existing bar
         x, y = bar.get_xy()
         width, height = bar.get_width(), bar.get_height()
         zorder = bar.zorder
         color = bar.get_facecolor()
 
-        cmap = mcolors.LinearSegmentedColormap.from_list('gradient_cmap', [(color[0], color[1], color[2], 0), color])
+        cmap = mcolors.LinearSegmentedColormap.from_list(
+            "gradient_cmap", [(color[0], color[1], color[2], 0), color]
+        )
 
         ax.imshow(
             X=X,  # pseudo-image
-            extent=[x, x+width, y, y+height],
+            extent=[x, x + width, y, y + height],
             cmap=cmap,
             zorder=zorder,
-            interpolation='bicubic',
-            aspect='auto',  # to prevent mpl from auto-scaling axes equally
+            interpolation="bicubic",
+            aspect="auto",  # to prevent mpl from auto-scaling axes equally
         )
 
         bar.remove()
