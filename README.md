@@ -131,6 +131,3 @@ plt.show()
 
 
 Some images can be bought as posters [here](https://displate.com/sr-artworks/dhaitz).
-
-## Requirements
-Depends only on `matplotlib`.
