@@ -1,4 +1,4 @@
-name: Test-and-deploy
+name: Test and deploy
 
 on: push
 
@@ -13,7 +13,6 @@ jobs:
       - uses: astral-sh/setup-uv@v3
       - run: uv python install $PYTHON_VERSION
       - run: uv sync --extra test
-      - run: uv pip install -e .
       - run: uv run pytest tests/tests.py
 
   deploy:
