@@ -1,6 +1,6 @@
 [project]
 name = "mplcyberpunk"
-version = "0.7.4"  # setting this here manually until uv supports dynamic versions properly
+version = "0.7.5"  # setting this here manually until uv supports dynamic versions properly
 description = "Add-on for Matplotlib to produce 'Cyberpunk' style plots"
 readme = "README.md"
 license = {text = "MIT License"}
