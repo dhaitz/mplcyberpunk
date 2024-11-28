@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v3
       - run: uv python install $PYTHON_VERSION
-      - run: uv sync --extra test
+      - run: uv sync --group test
       - run: uv run pytest tests/tests.py
 
   deploy:

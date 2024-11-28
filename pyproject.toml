@@ -21,7 +21,7 @@ dependencies = [
 [project.urls]
 Homepage = "https://github.com/dhaitz/mplcyberpunk"
 
-[project.optional-dependencies]
+[dependency-groups]
 test = [
     "pandas",
     "pytest"
