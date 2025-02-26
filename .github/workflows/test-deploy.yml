@@ -26,4 +26,4 @@ jobs:
       - uses: astral-sh/setup-uv@v3
       - run: uv python install $PYTHON_VERSION
       - run: uv build
-      - run: uv publish
+      - uses: pypa/gh-action-pypi-publish@release/v1
