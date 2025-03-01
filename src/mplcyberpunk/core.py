@@ -27,7 +27,7 @@ def make_lines_glow(
     n_glow_lines: int = 10,
     diff_linewidth: float = 1.05,
     alpha_line: float = 0.3,
-    lines: Union[Line2D, List[Line2D]] = None,
+    lines: Optional[Union[Line2D, List[Line2D]]] = None,
 ) -> None:
     """Add a glow effect to the lines in an axis object.
 
