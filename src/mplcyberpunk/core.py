@@ -239,7 +239,7 @@ def make_scatter_glow(
     alpha = alpha / n_glow_lines
 
     for i in range(1, n_glow_lines):
-        plt.scatter(x, y, s=dot_size * (diff_dotwidth**i), c=dot_color, alpha=alpha)
+        ax.scatter(x, y, s=dot_size * (diff_dotwidth**i), c=dot_color, alpha=alpha)
 
 
 def add_bar_gradient(
